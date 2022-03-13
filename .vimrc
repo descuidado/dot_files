@@ -1,0 +1,97 @@
+" All system-wide defaults are set in $VIMRUNTIME/debian.vim and sourced by
+" the call to :runtime you can find below.  If you wish to change any of those
+" settings, you should do it in this file (/etc/vim/vimrc), since debian.vim
+" will be overwritten everytime an upgrade of the vim packages is performed.
+" It is recommended to make changes after sourcing debian.vim since it alters
+" the value of the 'compatible' option.
+
+runtime! debian.vim
+
+" Vim will load $VIMRUNTIME/defaults.vim if the user does not have a vimrc.
+" This happens after /etc/vim/vimrc(.local) are loaded, so it will override
+" any settings in these files.
+" If you don't want that to happen, uncomment the below line to prevent
+" defaults.vim from being loaded.
+" let g:skip_defaults_vim = 1
+
+" Uncomment the next line to make Vim more Vi-compatible
+" NOTE: debian.vim sets 'nocompatible'.  Setting 'compatible' changes numerous
+" options, so any other options should be set AFTER setting 'compatible'.
+"set compatible
+
+" Vim5 and later versions support syntax highlighting. Uncommenting the next
+" line enables syntax highlighting by default.
+if has("syntax")
+  syntax on
+endif
+
+" If using a dark background within the editing area and syntax highlighting
+" turn on this option as well
+set background=dark
+
+" Uncomment the following to have Vim jump to the last position when
+" reopening a file
+"au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+
+" Uncomment the following to have Vim load indentation rules and plugins
+" according to the detected filetype.
+"filetype plugin indent on
+
+" The following are commented out as they cause vim to behave a lot
+" differently from regular Vi. They are highly recommended though.
+set showcmd		" Show (partial) command in status line.
+set showmatch		" Show matching brackets.
+set ignorecase		" Do case insensitive matching
+set smartcase		" Do smart case matching
+set incsearch		" Incremental search
+set autowrite		" Automatically save before commands like :next and :make
+"set hidden		" Hide buffers when they are abandoned
+"set mouse=a		" Enable mouse usage (all modes)
+
+" Source a global configuration file if available
+if filereadable("/etc/vim/vimrc.local")
+  source /etc/vim/vimrc.local
+endif
+let extension = expand('%:e')
+
+"if &filetype ==# 'py'
+"  autocmd FileType python map <buffer> <F9> :w<CR>:exec '!python3' shellescape(@%, 1)<CR>
+"  autocmd FileType python imap <buffer> <F9> <esc>:w<CR>:exec '!python3' shellescape(@%, 1)<CR>
+"endif
+if extension=='py'
+  imap <F5> <Esc>:w<CR>:!clear;python3 %<CR>
+  map <F5> <Esc>:w<CR>:!clear;python3 %<CR>
+elseif extension=='ino'
+  imap <F5> <Esc>:w<CR>:!clear;make compile %<CR>
+  map <F5> <Esc>:w<CR>:!clear;make compile %<CR>
+  imap <F6> <Esc>:w<CR>:!clear;make all %<CR>
+  map <F6> <Esc>:w<CR>:!clear;make all %<CR>
+endif
+
+set nowrap
+set relativenumber
+"set expandtab
+set shiftwidth=4
+set autoindent
+set smartindent
+set tabstop=4
+set list
+
+inoremap " ""<left>
+inoremap ' ''<left>
+inoremap ( ()<left>
+inoremap [ []<left>
+inoremap { {}<left>
+inoremap {<CR> {<CR>}<ESC>O
+inoremap {;<CR> {<CR>};<ESC>O
+
+"set listchars=tab:>-
+"set listchars=tab:├─,trail:·
+set listchars=tab:│ ,trail:·
+"set listchars=tab:╠═,trail:·
+"set listchars=tab:▓░,trail:·
+"set listchars=tab:▌ ,trail:·
+"set listchars=tab:≡ ,trail:·
+let g:ycm_autoclose_preview_window_after_insertion = 1
+let g:ycm_autoclose_preview_window_after_completion = 1
+let g:SuperTabClosePreviewOnPopupClose = 1

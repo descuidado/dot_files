@@ -64,8 +64,13 @@ if extension=='py'
 elseif extension=='ino'
   imap <F5> <Esc>:w<CR>:!clear;make compile %<CR>
   map <F5> <Esc>:w<CR>:!clear;make compile %<CR>
-  imap <F6> <Esc>:w<CR>:!clear;make all %<CR>
-  map <F6> <Esc>:w<CR>:!clear;make all %<CR>
+  imap <F6> <Esc>:w<CR>:!clear;make upload %<CR>
+  map <F6> <Esc>:w<CR>:!clear;make upload %<CR>
+elseif extension=='c'
+  imap <F5> <Esc>:w<CR>:!clear;make clean;make compile<CR>
+  map <F5> <Esc>:w<CR>:!clear;make clean;make compile<CR>
+  imap <F6> <Esc>:w<CR>:!clear;make clean;make compile;make upload<CR>
+  map <F6> <Esc>:w<CR>:!clear;make clean;make compile;make upload<CR>
 endif
 
 set nowrap
@@ -85,6 +90,24 @@ inoremap { {}<left>
 inoremap {<CR> {<CR>}<ESC>O
 inoremap {;<CR> {<CR>};<ESC>O
 
+inoremap <Space><Space> <Esc>/<++><Return>"_c4l
+inoremap ;i <i></i><Space><++><Esc>FiT>i
+inoremap ;P <?php echo  ?><++><Esc>F T>i
+inoremap ;p <p></p><Space><++><Esc>FpT>i
+inoremap ;ta <table class="form-table"><Return><Tab><tr><Return><Tab><th><Return><Tab><label for="<++>"><Return><BackSpace></th><Return><td><Return><Tab><input type="text" name="<++>" id="<++>" value="<++>"><Return><BackSpace></td><Return><BackSpace></tr><Return><BackSpace></table><Return><++><Esc><Home>7ki
+"inoremap ;img <image src="<++>" alt="<++>"><++><Esc><Home>i
+inoremap ;img <image src="" alt="<++>"><++>F"T>i
+inoremap ;a <a href="<++>" target="<++>"><++><Esc><Home>i
+inoremap ;l <input type="text" name="<++>" id="<++>" value="<++>"><++><Esc><Home>i
+
+"inoremap ;th <th></th><Space><++><Esc>FtT>i
+"inoremap ;td <td></td><Space><++><Esc>FtT>i
+"inoremap ;ta <td></td><Space><++><Esc>FtT>i
+
+
+
+
+
 "set listchars=tab:>-
 "set listchars=tab:├─,trail:·
 set listchars=tab:│ ,trail:·
@@ -95,3 +118,32 @@ set listchars=tab:│ ,trail:·
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:SuperTabClosePreviewOnPopupClose = 1
+
+
+
+
+
+
+
+"vundle plugin section
+set nocompatible
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
+" Add plugins here which you want to add
+call vundle#end()
+filetype plugin indent on
+
+let g:closetag_filenames = '*.html,*.xhtml,*.phtml'
+let g:closetag_xhtml_filenames = '*.xhtml,*.jsx'
+let g:closetag_filetypes = 'html,xhtml,phtml'
+let g:closetag_xhtml_filetypes = 'xhtml,jsx'
+let g:closetag_emptyTags_caseSensitive = 1
+let g:closetag_regions = {
+    \ 'typescript.tsx': 'jsxRegion,tsxRegion',
+    \ 'javascript.jsx': 'jsxRegion',
+    \ 'typescriptreact': 'jsxRegion,tsxRegion',
+    \ 'javascriptreact': 'jsxRegion',
+    \}
+

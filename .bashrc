@@ -112,4 +112,11 @@ if ! shopt -oq posix; then
   fi
 fi
 
-[[ $TERM != "screen" ]] && exec tmux
+
+#[[ $TERM != "screen" ]] && exec tmux
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+#to generate new PS1 code use https://bashrcgenerator.com/
+export PS1="[\[$(tput sgr0)\]\[\033[38;5;9m\]\$?\[$(tput sgr0)\]]\[$(tput sgr0)\]\[\033[38;5;84m\]\$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/')\[$(tput sgr0)\]\[\033[38;5;202m\]\\$\[$(tput sgr0)\] \[$(tput sgr0)\]"
